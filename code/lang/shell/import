@@ -1,0 +1,10 @@
+#!/bin/bash
+SCRIPT_PATH=$(cd $(dirname $0) && pwd)
+DATA_FILE="${SCRIPT_PATH}/exchange"
+MYSQL_CLIENT=$(command -v mysql)
+TABLE_FIELDS='@tmp, `user_id`, `award_id`, `count`, `cost`, `from`, `from_sub`, `get_way`, `status`, `create_time`, `update_time`, `check_time`'
+for ((i=0; i < 4000; i++))
+do
+	$MYSQL_CLIENT -e"LOAD DATA INFILE '${DATA_FILE}' INTO TABLE award_exchange ($TABLE_FIELDS)" duosai
+done
+	

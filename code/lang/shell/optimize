@@ -1,0 +1,16 @@
+#!/bin/bash
+MYSQL_BIN=$(command -v mysql);
+MYSQL_PARAMS='--skip-column-names -B'
+DATABASES=$@
+SQL=';'
+
+for db in $DATABASES
+do
+  TABLES=$($MYSQL_BIN $MYSQL_PARAMS '-eSHOW TABLES' $db)
+  for tb in $TABLES
+  do
+    SQL="$SQL OPTIMIZE TABLE $db.$tb;"
+  done
+done
+
+$MYSQL_BIN "-e$SQL"

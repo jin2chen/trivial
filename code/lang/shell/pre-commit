@@ -1,0 +1,18 @@
+#!/bin/sh
+export LANG=zh_CN.UTF-8
+export LANGUAGE=zh_CN:zh
+REPOS="$1"
+TXN="$2"
+
+SVNLOOK="/usr/bin/svnlook"
+$SVNLOOK changed -t "$TXN" "$REPOS" | grep -P '^[U|A]' | sed 's/^[A|U] *//' | grep -P '\.(php|htm|html|css|js|txt|sql|c)$' | while read FILE
+do	
+	$SVNLOOK cat -t "$TXN" "$REPOS" "$FILE" | grep -P '\r'
+	RES=$?
+	if [ $RES -eq 0 ]
+	then
+        echo 1>&2
+        echo "File '$FILE' is not unix format" 1>&2
+        exit 1
+    fi
+done

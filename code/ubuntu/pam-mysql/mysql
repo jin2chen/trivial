@@ -1,0 +1,13 @@
+Name: Mysql authentication
+Default: yes
+Priority: 200
+Auth-Type: Primary
+Auth:
+	[success=end default=ignore]	pam_mysql.so config_file=/etc/pam-mysql.conf try_first_pass
+Auth-Initial:
+	[success=end default=ignore]	pam_mysql.so config_file=/etc/pam-mysql.conf
+Password-Type: Primary
+Password:
+	[success=end default=ignore]	pam_mysql.so config_file=/etc/pam-mysql.conf try_first_pass
+Password-Initial:
+	[success=end default=ignore]	pam_mysql.so config_file=/etc/pam-mysql.conf

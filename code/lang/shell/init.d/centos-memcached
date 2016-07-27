@@ -1,0 +1,93 @@
+#!/bin/bash
+#
+# memcached  Memecached start and stop
+# 
+# chkconfig: - 22 78
+# description: Start memcached daemon
+# processname: memcached
+# config: /etc/sysconfig/memcached
+# author: mole <mole1230@gmail.com>
+#
+### BEGIN INIT INFO
+# Provides:          memcached
+# Required-Start:    $network
+# Required-Stop:     $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start and stop memcached
+# Description: Memcached is an in-memory key-value store for 
+#              small chunks of arbitrary data (strings, objects) 
+#              from results of database calls, API calls, or page rendering 
+### END INIT INFO
+
+# Source function library.
+. /etc/init.d/functions
+
+# Read configuration variable file if it is present
+[ -r /etc/sysconfig/memcached ] && . /etc/sysconfig/memcached
+
+prog="memcached"
+[ $(id -u) = 0 ] && USER=daemon || USER=${USER:-daemon}
+BASEDIR=${BASEDIR:-/usr/local/memcached}
+MEMCACHED=${DAEMON:-$BASEDIR/bin/memcached}
+MEMCACHED_ARGS=${DAEMON_ARGS:--d -u $USER}
+RETVAL=0
+
+do_check() {
+	while true
+	do
+
+		if [ ! -x $MEMCACHED ]; then
+			RETVAL=1
+			echo -n "$MEMCACHED is not found"
+			break;
+		fi
+
+		break;
+	done
+
+	if [ $RETVAL != 0 ]; then 
+		failure
+		exit 1
+	fi 
+	
+	return 0
+}
+
+do_start() {
+	echo -n "Starting $prog: "
+	do_check || exit 1
+
+	daemon $MEMCACHED $MEMCACHED_ARGS
+	RETVAL=$?
+	echo
+	return $RETVAL
+}
+
+do_stop() {
+	echo -n "Stopping $prog: "
+	do_check || exit 1;
+	
+	killproc $MEMCACHED
+	RETVAL=$?
+	echo
+	return $RETVAL
+}
+
+# See how we are called.
+case "$1" in
+	start)
+		do_start
+		;;
+	stop)
+		do_stop
+		;;
+	restart)
+		do_stop
+		do_start
+		;;
+	*)
+		echo "Usage: $prog {start|stop|restart}"
+		exit 1;
+esac
+

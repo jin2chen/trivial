@@ -1,0 +1,4 @@
+default install
+label install
+	kernel ubuntu-installer/amd64/linux
+	append DEBCONF_DEBUG=5 auto=true priority=critical url=http://10.10.10.13/pure.seed vga=788 initrd=ubuntu-installer/amd64/initrd.gz -- quiet 

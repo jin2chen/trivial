@@ -1,0 +1,11 @@
+#!/bin/bash
+GZIP_BIN=/bin/gzip
+BACKUP_DIR=/data/backup
+MYSQLDUMP_BIN=/usr/local/bin/mysqldump
+BASENAME=$(date +"%Y%m%d-%H")
+echo '====================================='
+echo $(date)
+
+$MYSQLDUMP_BIN jiaju | $GZIP_BIN -9 > $BACKUP_DIR/$BASENAME.jiaju.gz
+find $BACKUP_DIR -name "*.gz" -mtime +1 | xargs rm -rf
+

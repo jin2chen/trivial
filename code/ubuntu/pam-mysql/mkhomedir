@@ -1,0 +1,8 @@
+Name: Create users home directory
+Default: yes
+Priority: 200
+Session-Type: Additional
+Session:
+	required	pam_mkhomedir.so
+Session-Initial:
+	required	pam_mkhomedir.so

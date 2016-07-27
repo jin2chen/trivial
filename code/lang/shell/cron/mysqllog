@@ -1,0 +1,5 @@
+#!/bin/bash
+echo '====================================='
+echo $(date)
+mv /data/log/mysql/mysql-query.log /data/log/mysql/mysql-query.log$(date +"%Y%m%d-%H%M")
+/usr/local/mysql/bin/mysqladmin flush-logs

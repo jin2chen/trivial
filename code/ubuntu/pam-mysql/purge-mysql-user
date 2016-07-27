@@ -1,0 +1,7 @@
+#!/bin/bash
+MYSQL_OPTIONS='--skip-column-names -B -u root'
+TMP_FILE=/tmp/user.$$
+mysql $MYSQL_OPTIONS -e "select user, host from mysql.user" > $TMP_FILE
+awk -F'\t' '{printf "DROP USER '\''%s'\''@'\''%s'\'';\n", $1, $2}' $TMP_FILE  | grep -v "'root'@'127.0.0.1'" | grep -v "'root'@'localhost'" > $TMP_FILE.sql
+mysql $MYSQL_OPTIONS < $TMP_FILE.sql 
+rm $TMP_FILE $TMP_FILE.sql
