@@ -1,0 +1,16 @@
+#!/bin/bash
+WEB_ROOT='/data/www'
+#SVN_HOSTS='admin.designer.jiaju.sina.com.cn admin.supports.house.sina.com.cn admin.supports.jiaju.sina.com.cn admin.tuan.jiaju.sina.com.cn designer.jiaju.sina.com.cn news.jiaju.sina.com.cn supports.house.sina.com.cn/trunk/decor supports.jiaju.sina.com.cn tuan.jiaju.sina.com.cn'
+SVN_HOSTS='mall.jiaju.sina.com.cn/trunk admin.mall.jiaju.sina.com.cn/trunk'
+SVN_BIN='/usr/bin/svn'
+SVN_USER='chenjin'
+SVN_PASS='chenjin'
+
+for dir in $SVN_HOSTS; do
+	echo '====================================='
+	echo $(date)
+	echo $dir
+	$SVN_BIN up --non-interactive --trust-server-cert --no-auth-cache --username=$SVN_USER --password=$SVN_PASS ${WEB_ROOT}/${dir}
+	echo 
+done
+

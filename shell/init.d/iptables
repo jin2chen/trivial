@@ -1,0 +1,98 @@
+#! /bin/sh
+
+#This is an Ubuntu adapted iptables script from gentoo
+#(http://www.gentoo.org) which was originally distributed
+#under the terms of the GNU General Public License v2
+#and was Copyrighted 1999-2004 by the Gentoo Foundation
+#
+#This adapted version was intended for and ad-hoc personal
+#situation and as such no warranty is provided.
+#http://ubuntuforums.org/showthread.php?t=57111
+#http://wiki.ledhed.net/index.php/IPTables_Init_Script#The_Script
+
+. /lib/lsb/init-functions
+
+
+IPTABLES_SAVE="/etc/default/iptables-rules"
+SAVE_RESTORE_OPTIONS="-c"
+
+
+checkrules() {
+	if [ ! -f ${IPTABLES_SAVE} ]
+	then
+		echo "Not starting iptables. First create some rules then run"
+		echo "\"/etc/init.d/iptables save\""
+		return 1
+	fi
+}
+
+save() {
+	/sbin/iptables-save ${SAVE_RESTORE_OPTIONS} > ${IPTABLES_SAVE}
+	return $?
+}
+
+start(){
+	checkrules || return 1
+	/sbin/iptables-restore ${SAVE_RESTORE_OPTIONS} < ${IPTABLES_SAVE}
+	return $?
+}
+
+
+case "$1" in
+	save)
+		echo -n "Saving iptables state..."
+		save
+		if [ $? -eq 0 ] ; then
+			echo " ok"
+		else
+			echo " error !"
+		fi
+	;;
+
+	start)
+		log_begin_msg "Loading iptables state and starting firewall..."
+		start
+		log_end_msg $?
+	;;
+	stop)
+		log_begin_msg "Stopping firewall..."
+		for a in `cat /proc/net/ip_tables_names`; do
+			/sbin/iptables -F -t $a
+			/sbin/iptables -X -t $a
+
+			if [ $a == nat ]; then
+				/sbin/iptables -t nat -P PREROUTING ACCEPT
+				/sbin/iptables -t nat -P POSTROUTING ACCEPT
+				/sbin/iptables -t nat -P OUTPUT ACCEPT
+			elif [ $a == mangle ]; then
+				/sbin/iptables -t mangle -P PREROUTING ACCEPT
+				/sbin/iptables -t mangle -P INPUT ACCEPT
+				/sbin/iptables -t mangle -P FORWARD ACCEPT
+				/sbin/iptables -t mangle -P OUTPUT ACCEPT
+				/sbin/iptables -t mangle -P POSTROUTING ACCEPT
+			elif [ $a == filter ]; then
+				/sbin/iptables -t filter -P INPUT ACCEPT
+				/sbin/iptables -t filter -P FORWARD ACCEPT
+				/sbin/iptables -t filter -P OUTPUT ACCEPT
+			fi
+		done
+		log_end_msg 0
+	;;
+
+	restart)
+		log_begin_msg "Restarting firewall..."
+		for a in `cat /proc/net/ip_tables_names`; do
+			/sbin/iptables -F -t $a
+			/sbin/iptables -X -t $a
+		done;
+		start
+		log_end_msg $?
+	;;
+
+	*)
+		echo "Usage: /etc/init.d/iptables {start|stop|restart|save}" >&2
+		exit 1
+    	;;
+esac
+
+exit 0

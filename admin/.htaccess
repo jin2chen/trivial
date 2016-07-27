@@ -1,0 +1,27 @@
+SetEnv ENV_DEV "1"
+
+#主数据库
+SetEnv DB_HOST "127.0.0.1"
+SetEnv DB_PORT ""
+SetEnv DB_USER "root"
+SetEnv DB_PASS ""
+SetEnv DB_NAME "manager"
+
+php_value	display_errors			On
+php_value	short_open_tag			Off
+php_value	magic_quotes_gpc		Off
+php_value	magic_quotes_runtime	Off
+php_value	magic_quotes_sybase		Off
+php_value	allow_call_time_pass_reference	Off
+php_value	register_long_arrays	Off
+php_value	register_globals		Off
+php_value	date.timezone			Asia/ShangHai
+
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_URI} !^/?(css/.*|images/.*|js/.*|flash/.*|assets/.*|robots\.txt|crossdomain\.xml|favicon\.ico)$
+
+# 本地
+#RewriteRule . index.php
+
+

@@ -1,0 +1,93 @@
+body {
+	font-family: verdana,arial,helvetica,sans-serif;
+	font-size: 12px;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	z-index: 1;
+}
+body,ul,form {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.head {
+	background: url(../images/admin_top_bg.jpg) left top repeat-x;
+	height: 66px;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	z-index: 8;
+}
+.head-nav {
+	clear: both;
+	height: 37px;
+	overflow: hidden;
+	width: 100%;
+}
+.head-logo {
+	background: url(../images/admin_top_logo.gif) left top no-repeat;
+	float: left;
+	height: 37px;
+	width: 170px;
+}
+.head-link {
+	float: right;
+	padding: 5px 10px 0px 0px;
+}
+.head-link-ul {
+	float: left;
+	line-height: 14px;
+	overflow: hidden;
+	padding: 8px 0px 0px 0px;
+}
+.head-welcome {
+	border-right: none;
+	color: #a8c280;
+	padding-right: 6px;
+}
+.head-link-ul li {
+	border-right: 1px solid #61910f;
+	color: #cbdab3;
+	float: left;
+	margin-right: -1px;
+}
+.head-link-ul a {
+	color: #cbdab3;
+	padding-left: 11px;
+	padding-right: 11px;
+	text-decoration: none;
+}
+.head-link-ul a:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+.head-fn {
+	clear: both;
+	height: 29px;
+	overflow: hidden;
+	width: 100%;
+}
+.menuact {
+	float: left;
+	overflow: hidden;
+	padding-left: 10px;
+	padding-top: 6px;
+}
+.menuact a {
+	color: #999999;
+	overflow: hidden;
+	padding-left: 20px;
+	padding-right: 3px;
+	text-decoration: none;
+}
+.menuact a:hover {
+	color: #fff;
+	text-decoration: none;
+}
+.toggle-menu {
+	background:url(../images/icon-bg.png) no-repeat 0 -34px;
+}
+.all-menu {
+	background:url(../images/icon-bg.png) no-repeat 0 -70px;
+}

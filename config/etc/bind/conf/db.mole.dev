@@ -1,0 +1,12 @@
+;
+; BIND data file for local loopback interface
+;
+$TTL	604800
+@   IN  SOA	dns.mole.com. admin.mole.com. ( 2013040801 604800 86400	2419200	604800 )	
+@   IN	NS	dns.mole.com.
+@   IN  MX	10 www.mole.dev.
+www		IN	A		192.168.3.33
+		IN	A		192.168.3.34
+		IN	A		192.168.3.35
+admin	IN	CNAME	www
+db		IN	CNAME	www

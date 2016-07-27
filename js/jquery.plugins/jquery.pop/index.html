@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title> new document </title>
+<style type="text/css">
+body {
+	padding: 50px;
+}
+.wrap {
+	display: inline-block;
+}
+.wrap span, .wrap a, .wrap label, .wrap em {
+	display: inline-block;
+	cursor: pointer;
+}
+.wrap em {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.select {
+	position: relative;
+	border: 1px solid #70B8FF;
+	width: 100px;
+}
+.pop-layer {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #0267C4;
+	line-height: 24px;
+	overflow: hidden;
+	padding: 9px 11px;
+	width: 356px;
+	z-index: 20;
+}
+.pop-layer span, .pop-layer a {
+	display: inline-block;
+	margin-right: 9px;
+	cursor: pointer;
+}
+.current {
+	color: #f00;
+}
+.pop-select a:hover {
+	color: #f00;
+}
+em {
+	font-style: normal;
+}
+</style>
+<script type="text/javascript" src="js/jquery.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/jquery.pop.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/data.js" charset="utf-8"></script>
+</head>
+
+<body>
+<div id="a1">
+<span class="wrap">
+	<a class="select"><label>选择区域</label><em> ↓</em></a>
+	<a class="select"><label>选择板块</label><em> ↓</em></a>
+</span>
+<span class="wrap">
+	<a class="select"><label>选择区域</label><em> ↓</em></a>
+	<a class="select"><label>选择板块</label><em> ↓</em></a>
+</span>
+</div>
+<div id="a2" style="margin-top: 150px;">
+<span class="wrap">
+	<a class="select"><label>选择区域</label><em> ↓</em></a>
+	<a class="select"><label>选择板块</label><em> ↓</em></a>
+</span>
+</div>
+<script>
+$('#a1 .wrap').popSelect({
+	data: [DIST_AREA.dists, DIST_AREA.areas],
+	selected: [0, 0]
+});
+$('#a2 .wrap').popSelect({
+	data: [DIST_AREA.dists, DIST_AREA.areas],
+	selected: [1, 10027],
+	onSelect: [select, select]
+});
+function select() {
+	var s = this.settings;
+	console && console.log(s.selected);
+}
+</script>
+</body>
+</html>

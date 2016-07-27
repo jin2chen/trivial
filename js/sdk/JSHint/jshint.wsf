@@ -1,0 +1,5 @@
+<job>
+	<script language="JScript" src="jshint.js"/>
+	<script language="JScript" src="options.js"/>
+	<script language="JScript" src="wsh-jslint-runner.js"/>
+</job>

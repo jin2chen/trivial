@@ -1,0 +1,56 @@
+#!/bin/bash
+set -e
+SCRIPT_DIR=$(cd $(dirname $0) && pwd)
+LIBNSS_MYSQL_FILE=$SCRIPT_DIR/libnss-mysql.cfg
+LIBNSS_MYSQL_ROOT_FILE=$SCRIPT_DIR/libnss-mysql-root.cfg
+PAM_MYSQL_FILE=$SCRIPT_DIR/pam-mysql.conf
+PURGE_MYSQL_USER_FILE=$SCRIPT_DIR/purge-mysql-user
+PROFILE_MYSQL=$SCRIPT_DIR/mysql
+PROFILE_MKHOMEDIR=$SCRIPT_DIR/mkhomedir
+AUTH_SQL=$SCRIPT_DIR/auth.sql
+
+if [ `id -u` -ne 0 ]
+then
+	echo 'You must run as root.'
+	exit 1;
+fi
+
+#---------------------------------------------------------#
+# 安装mysql
+# 请注意在安装过程，会要示输入root密码时，请直接回车跳过
+#---------------------------------------------------------#
+echo '==>Begin installing mysql server ...'
+aptitude -y install mysql-server
+. $PURGE_MYSQL_USER_FILE
+echo '==>End installed mysql server.'
+echo '==>Begin importing auth database ...'
+mysql -u root < $AUTH_SQL
+echo '==>End imported auth database.'
+
+#----------------------------------------------------------------------#
+# 安装pam-msyql
+# 由于系统带的编译包不支持 MD5, SHA1，主要是因为pam_mysql.so链接缺少libcrypto
+# dpkg-dev用于获取libpam-mysql源码与编译环境
+# pkg-config缺少此包时，不能检测到openssl库，所以不能支持MD5, SHA1
+#----------------------------------------------------------------------#
+echo '==>Begin installing some libs ...'
+aptitude -y install dpkg-dev pkg-config libssl-dev libpam0g-dev libmysqlclient-dev libnss-mysql-bg
+echo '==>End installed some libs ...'
+echo '==>Begin compiling and installing pam-mysql ...'
+mkdir $SCRIPT_DIR/tmp
+pushd $SCRIPT_DIR/tmp
+apt-get  source  libpam-mysql
+cd pam-mysql-0.7~RC1/
+./configure --with-pam-mods-dir=/lib/x86_64-linux-gnu/security --with-openssl && make && make install
+popd
+rm -rf $SCRIPT_DIR/tmp
+cp -fv $LIBNSS_MYSQL_FILE /etc/libnss-mysql.cfg
+cp -fv $LIBNSS_MYSQL_ROOT_FILE /etc/libnss-mysql-root.cfg
+cp -fv $PAM_MYSQL_FILE /etc/pam-mysql.conf
+cp -fv $PROFILE_MYSQL /usr/share/pam-configs/mysql
+cp -fv $PROFILE_MKHOMEDIR /usr/share/pam-configs/mkhomedir
+sed -e 's/^passwd:\s*\S\+/\0 mysql/' -e 's/^group:\s*\S\+/\0 mysql/' -e 's/^shadow:\s*\S\+/\0 mysql/' /etc/nsswitch.conf > /tmp/nsswitch.conf.$$
+mv -fv /tmp/nsswitch.conf.$$ /etc/nsswitch.conf
+pam-auth-update
+echo '==>End compiled and installed pam-mysql.'
+

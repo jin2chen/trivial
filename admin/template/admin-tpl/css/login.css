@@ -1,0 +1,271 @@
+@charset "utf-8";
+/**
+ * 后台管理登陆页、框架顶页和左侧页CSS
+ *
+ * @author     mole<mole1230@gmail.com>
+ * @version    $Id: login.css 70 2010-12-12 13:52:05Z mole1230 $
+ */
+
+body {
+	font-size: 12px;
+	font-family: "Courier New", Courier, monospace, 宋体;
+}
+
+/**-----------------------------
+ * login-page
+ *----------------------------*/
+#login-page {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	text-align: center;
+	background: url(../images/login_04.png) repeat-x scroll 0 0 #152753;
+}
+#login-page #wrap {
+	text-align: left;
+	margin: 0 auto;
+	width: 800px;
+}
+#login-page #top {
+	background: url(../images/login_01.png) no-repeat scroll 0 0 transparent;
+	height: 284px;
+}
+#login-page #main {
+	background: url(../images/login_02.png) no-repeat scroll 0 0 transparent;
+	height: 98px;
+}
+#login-page #login-wrap {
+	width: 280px;
+	height: 98px;
+	position: relative;
+	left: 250px;
+}
+#login-page #login-wrap .login-text {
+	height: 100%;
+	width: 190px;
+	float: left;
+}
+#login-page #login-wrap .login-button {
+	height: 100%;
+	width: 88px;
+	float: right;
+}
+#login-page #login-wrap ul {
+	padding: 15px 0 15px 15px;
+	margin: 0px;
+}
+#login-page #login-wrap ul li {
+	list-style: none;
+	color: #FFF;
+	font-size: 13px;
+	font-weight: bold;
+	margin: 0 0 5px 0;
+}
+#login-page #login-wrap ul li.captcha {
+	position: relative;
+}
+#login-page #login-wrap ul li.captcha img {
+	position: absolute;
+	cursor: pointer;
+}
+#login-page #login-wrap div.login-text input {
+	width: 98px;
+	height: 15px;
+	border: 1px solid #153966;
+	background: #87adbf;
+	color: #FFF;
+	font-weight: bold;
+}
+#login-page #login-wrap div.login-text input.captcha {
+	width: 34px;
+}
+#login-page #login-wrap div.login-button ul {
+	padding-top: 27px;
+}
+#login-page #login-wrap div.login-button input.sp-bt-01 {
+	background:url(../images/sprites.gif) no-repeat scroll 0 0 transparent;
+	width: 57px;
+	height: 20px;
+	line-height: 20px;
+	font-size: 12px;
+	color: #FFF;
+	font-weight: bold;
+	border: none;
+	cursor: pointer;
+}
+#login-page #bottom {
+	background: url(../images/login_03.png) no-repeat scroll 0 0 transparent;
+	height: 226px;
+}
+
+/**-----------------------------
+ * top-frame
+ *----------------------------*/
+#top-frame {
+	background: #171a1d;
+	padding: 0;
+	margin: 0;
+	color: #FFF;
+}
+#top-frame #wrap {
+	background: url(../images/top_03.png) repeat-x scroll 0 0 transparent;
+	width: 100%;
+	height: 92px;
+}
+#top-frame #left {
+	background: url(../images/top_01.png) no-repeat scroll 0 0 transparent;
+	width: 462px;
+	height: 100%;
+	float: left;
+	position: relative;
+}
+#top-frame #right {
+	background: url(../images/top_02.png) no-repeat scroll 0 0 transparent;
+	width: 279px;
+	height: 100%;
+	float: right;
+	position: relative;
+}
+#top-frame #nav {
+	position: absolute;
+	left: 195px;
+	bottom: 10px;
+	width: 268px;
+	height: 14px;
+}
+#top-frame #nav a{
+	display: inline-block;
+	padding: 0 0 0 24px;
+	text-decoration: none;
+}
+#top-frame #nav a.home {
+	background:url(../images/sprites.gif) no-repeat scroll 0 -192px transparent;
+}
+#top-frame #nav a.back {
+	background:url(../images/sprites.gif) no-repeat scroll 0 -128px transparent;
+}
+#top-frame #nav a.forward {
+	background:url(../images/sprites.gif) no-repeat scroll 0 -159px transparent;
+}
+#top-frame #nav a.fresh {
+	background:url(../images/sprites.gif) no-repeat scroll 0 -247px transparent;
+}
+#top-frame #nav a.help {
+	background:url(../images/sprites.gif) no-repeat scroll 0 -219px transparent;
+}
+#top-frame #nav a:visited, #nav a:link, #nav a:active, 
+#top-frame #operate a.logout:visited, #operate a.logout:link, #operate a.logout:active {
+	color: #FFF;
+}
+#top-frame #nav a:hover,
+#top-frame #operate a.logout:hover {
+	color: #F00;
+}
+#top-frame #operate {
+	position: absolute;
+	top: 35px;
+	padding: 0 0 0 45px;
+}
+#top-frame #operate a {
+	display: inline-block;
+	text-decoration: none;
+	padding: 0 8px 0 16px;
+	height: 16px;
+	line-height: 16px;
+}
+#top-frame #operate a.password {
+	background:url(../images/sprites.gif) no-repeat scroll -154px -126px transparent;
+}
+#top-frame #operate a.info {
+	background:url(../images/sprites.gif) no-repeat scroll -154px -95px transparent;
+}
+#top-frame #operate a.logout {
+	background:url(../images/sprites.gif) no-repeat scroll -154px -66px transparent;
+	padding: 0 8px;
+	margin: 0;
+}
+#top-frame #operate a:visited, #operate a:link, #operate a:active {
+	color: #000;
+}
+#top-frame #operate a:hover {
+	color: #F00;
+}
+#top-frame #calendar {
+	position: absolute;
+	bottom: 5px;
+	height: 20px;
+	line-height: 20px;
+	padding: 0 0 0 70px;
+}
+
+
+/**-----------------------------
+ * left-frame
+ *----------------------------*/
+#left-frame {
+	background: #353c44;
+	padding: 0;
+	margin: 0;
+	color: #000;
+}
+#left-frame #wrap {
+	width: 165px;
+}
+#left-frame #manage {
+	background: url(../images/left_01.png) no-repeat scroll 0 0 transparent;
+	width: 100%;
+	height: 35px;
+}
+#left-frame #copyright {
+	background: url(../images/left_02.png) no-repeat scroll 0 0 transparent;
+	width: 100%;
+	height: 23px;
+	line-height: 23px;
+	text-align: center;
+}
+#left-frame #menu-wrap {
+	background: #add2da;
+	margin: 0 0 0 8px;
+}
+#left-frame #menu {
+	background: #FFF;
+	margin:	0 13px 0 0;
+}
+#left-frame #menu div.block {
+	width: 144px;
+}
+#left-frame #menu div.title {
+	background: url(../images/sprites.gif) no-repeat scroll -154px -34px transparent;
+	width: 100%;
+	height: 23px;
+	line-height: 23px;
+	text-align: center;
+	cursor: pointer;
+}
+#left-frame #menu ul {
+	margin: 0;
+	padding: 0 0 0 12px;
+	line-height: 25px;
+/* 最小高度 */
+	min-height: 380px; 
+	height: auto !important; 
+	height: 380px; 
+	overflow: visible;
+}
+#left-frame #menu ul li {
+	list-style: none;
+}
+#left-frame #menu a {
+	display: inline-block;
+	text-decoration: none;
+	width: 90px;
+	height: 25px;
+	padding: 0 0 0 8px;
+}
+#left-frame #menu a:visited, #menu a:link, #menu a:active {
+	color: #000;
+}
+#left-frame #menu a:hover {
+	background: url(../images/sprites.gif) no-repeat scroll -153px 0 transparent;
+	color: #F00;
+}

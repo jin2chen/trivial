@@ -1,0 +1,90 @@
+body {
+	background-color: #f7f7f7;
+}
+.w128 {
+	width: 128px;
+}
+.login-box {
+	background: url(../images/login-top.jpg) #fff top center no-repeat;
+	border: 5px solid #eee;
+	margin: 150px auto 0 auto;
+	padding: 0 30px;
+	width: 570px;
+}
+.login-top {
+	height: 48px;
+	line-height: 48px;
+	text-align: right;
+}
+.login-top a {
+	color: #666;
+}
+.login-top a:hover {
+	color: #333;
+	text-decoration: underline;
+}
+.msg-failure {
+	background: url(../images/msg_bg.png) no-repeat 0 -1553px #FFFFCC;
+	border: 1px solid #f2dd8c;
+	color: #c00;
+	min-height: 35px;
+	margin-top: 5px;
+	padding: 5px 5px 5px 45px;
+}
+.login-main {
+	background: url(../images/login-bg.jpg) top right no-repeat;
+	height: 160px;
+	margin-top: 10px;
+}
+.login-main dl {
+	width: 300px;
+}
+.login-main dl dt,.login-main dl dd {
+	display: inline-block;
+	float: left;
+	height: 30px;
+	line-height: 30px;
+	margin-top: 5px;
+}
+.login-main dl dt {
+	color: #333;
+	font-size: 14px;
+	font-weight: bold;
+	padding-right: 5px;
+	text-align: right;
+	width: 90px;
+}
+.login-main dl dd {
+}
+.btn-login {
+	background: url(../images/button_bg.png) no-repeat 0 -108px;;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: bold;
+	height: 28px;
+	line-height: 28px;
+	margin-top: 5px;
+	text-align: center;
+	width: 84px;
+}
+.login-power {
+	color: #999;
+	font: 11px tahoma,helvetica,arial,sans-serif;
+	height: 25px;
+	line-height: 25px;
+	margin-top: 5px;
+	text-align: right;
+}
+.login-power strong {
+	color: #669900;
+}
+.login-power a {
+	color: #256eb1;
+	margin: 0 3px;
+}
+.login-power a:hover {
+	color: #1a4a77;
+	text-decoration: underline;
+}

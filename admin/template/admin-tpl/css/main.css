@@ -1,0 +1,41 @@
+@charset "utf-8";
+/**
+ * 主窗口
+ *
+ * @author     mole<mole1230@gmail.com>
+ * @version    $Id: main.css 22 2010-10-25 01:58:49Z mole1230 $
+ */
+
+body {
+	background: #353c44;
+	padding: 0;
+	margin: 0;
+	font-size: 12px;
+	font-family: "Courier New", Courier, monospace, 宋体;
+	color: #000;
+}
+#wrap {
+    background: url(../images/main_02.png) repeat-x scroll 0 0 transparent;
+}
+#admin-info {
+	background: url(../images/main_01.png) no-repeat scroll right 0 transparent;
+	height: 35px;
+}
+#admin-info div.userinfo {
+	padding: 15px 0 0 30px;
+}
+#admin-info div.userinfo span {
+	font-size: 9px;
+	color: #FFF;
+}
+#content-wrap {
+	padding: 0 8px 0 0; 
+}
+#content {
+	background: #FFF;
+	/* 最小高度 */
+	min-height: 449px; 
+	height: auto !important; 
+	height: 449px; 
+	overflow: visible;
+}

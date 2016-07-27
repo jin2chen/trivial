@@ -1,0 +1,115 @@
+#!/bin/bash
+#
+# lvsdrr  LVS-DR Real server start and stop
+# 
+# chkconfig: - 22 78
+# description: Add VIP for LVS-DR real server. \
+#              see ifconfig(8)
+# processname: lvsdrr
+# config:
+# pidfile: 
+# author: mole
+### BEGIN INIT INFO
+# Provides:          lvsdrr
+# Required-Start:    $network
+# Required-Stop:     $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start and stop lvsdrr
+# Description: 
+### END INIT INFO
+
+# Source function library.
+. /etc/init.d/functions
+
+if [ -f /etc/sysconfig/lvsdrr ]; then
+	. /etc/sysconfig/lvsdrr
+fi
+
+prog=lvsdrr
+VIPS=${VIPS:-192.168.194.222 192.168.194.225}
+RETVAL=0
+
+do_check() {
+
+	while true
+	do
+		if [ $(id -u) != 0 ]; then
+			RETVAL=1
+			echo -n "No permission, please use root"
+			break;
+		fi
+
+		break;
+	done
+
+	if [ $RETVAL != 0 ]; then 
+		failure
+		echo
+		exit 1
+	fi 
+	
+	return 0
+}
+
+do_start() {
+	echo -n "Starting $prog: "
+	do_check || exit 1
+
+	echo "1" > /proc/sys/net/ipv4/conf/lo/arp_ignore	
+	echo "2" > /proc/sys/net/ipv4/conf/lo/arp_announce
+	echo "1" > /proc/sys/net/ipv4/conf/all/arp_ignore
+	echo "2" > /proc/sys/net/ipv4/conf/all/arp_announce
+	sysctl -p &> /dev/null	
+	
+	for vip in $VIPS
+	do
+		ip addr add $vip/32 dev lo &> /dev/null
+		route add -host $vip dev lo &> /dev/null
+	done
+
+	RETVAL=$?
+	[ $RETVAL = 0 ] && success $"$prog startup" || failure $"$prog startup"
+	echo
+	return $RETVAL
+}
+
+do_stop() {
+	echo -n "Stopping $prog: "
+	do_check || exit 1;
+	
+	for vip in $VIPS
+	do
+		route del -host $vip dev lo &> /dev/null
+		ip addr del $vip/32 dev lo &> /dev/null
+	done
+
+	echo "0" > /proc/sys/net/ipv4/conf/lo/arp_ignore
+	echo "0" > /proc/sys/net/ipv4/conf/lo/arp_announce
+	echo "0" > /proc/sys/net/ipv4/conf/all/arp_ignore
+	echo "0" > /proc/sys/net/ipv4/conf/all/arp_announce
+	sysctl -p &> /dev/null
+
+	RETVAL=$?
+	[ $RETVAL = 0 ] && success $"$prog stop"|| failure $"$prog stop"
+	echo
+	return $RETVAL
+}
+
+# See how we are called.
+case "$1" in
+	start)
+		do_start
+		;;
+	stop)
+		do_stop
+		;;
+	restart)
+		do_stop
+		do_start
+		;;
+	*)
+		echo "Usage: $prog {start|stop|restart}"
+		exit 1;
+esac
+

@@ -1,0 +1,95 @@
+#!/bin/bash
+MIN_ARGS=2
+E_OPTERROR=65
+DOMAIN=local
+HOSTNAME_FILE=/etc/hostname
+HOSTS_FILE=/etc/hosts
+IF_FILE=/etc/network/interfaces
+NET_RULE_FILE=/etc/udev/rules.d/70-persistent-net.rules
+VIM_RC=/etc/vim/vimrc
+BASH_RC="/etc/skel/.bashrc /root/.bashrc"
+NEW_HOSTNAME=
+NEW_IP=
+
+if [ `id -u` -ne 0 ] 
+then
+	echo 'You must run as root'
+fi
+
+if [ $# -lt $MIN_ARGS ]
+then
+	echo "Usage: `basename $0` new-hostname new-ip"
+	exit $E_OPTERROR
+fi
+
+NEW_HOSTNAME=$1
+NEW_IP=$2
+
+if [ -e $VIM_RC~ ]; then
+	cp $VIM_RC~ $VIM_RC
+elif [ -e $VIM_RC ]; then
+	cp $VIM_RC $VIM_RC~
+fi
+
+if [ -e $VIM_RC ]; then
+#-----------------------------------	
+cat >> $VIM_RC << EOT
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+if has("autocmd")
+  filetype plugin indent on
+endif
+
+set nu
+set ts=4
+set sw=4
+set modeline
+set modelines=5
+colorscheme desert
+EOT
+#-----------------------------------	
+fi
+
+#-----------------------------------	
+cat > $IF_FILE << EOT
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+iface eth0 inet static
+address $NEW_IP
+netmask 255.255.255.0
+gateway 192.168.1.1
+dns-nameservers 202.106.46.151 202.106.195.68
+EOT
+#-----------------------------------	
+cat > $HOSTS_FILE << EOT
+127.0.0.1	localhost
+127.0.0.1	$NEW_HOSTNAME.$DOMAIN $NEW_HOSTNAME 
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+EOT
+#-----------------------------------	
+#rm -f $NET_RULE_FILE
+rm -rf /root/.ssh
+echo $NEW_HOSTNAME.$DOMAIN > $HOSTNAME_FILE
+for file in $BASH_RC
+do
+	sed -e "s/^alias ll='ls -alF'/alias ll='ls -hlF'/" -i $file
+done
+#-----------------------------------
+#mkdir -p /root/.pip
+#echo -e "[global]\nindex-url=http://pypi.douban.com/simple" > /root/.pip/pip.conf
+#echo -e "[easy_install]\nindex-url=http://pypi.douban.com/simple" > /root/.pydistutils.cfg

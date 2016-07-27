@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<base target="main">
+<title>MENU-后台管理系统</title>
+<link rel="stylesheet" href="css/menu.css" />
+<script src="js/jquery-1.6.2.js"></script>
+</head>
+<body>
+<table width="187" border="0" cellspacing="0" cellpadding="0" align="left">
+	<tbody>
+		<tr>
+			<td id="module" class="module" width="27" valign="top">
+				<ul>
+					<li>核心</li>
+					<li>模块</li>
+					<li>生成</li>
+					<li>采集</li>
+					<li>会员</li>
+					<li>模板</li>
+					<li>系统</li>
+				</ul>
+			</td>
+			<td id="list" class="list" width="160" align="left" valign="top">
+				<div>
+					<dl>
+						<dt><strong>常用操作</strong></dt>
+						<dd>
+						<ul>
+							<li><a href="catalog_add.php?listtype=all">网站栏目管理</a></li>
+							<li><a href="content_list.php">所有档案列表</a></li>
+							<li><a href="content_list.php?arcrank=-1">等审核的档案</a></li>
+							<li><a href="content_list.php?mid=1">我发布的文档</a></li>
+							<li><a href="feedback_main.php">评论管理</a></li>
+						</ul>
+						</dd>
+					</dl>
+					<dl>
+						<dt><strong>常用操作</strong></dt>
+						<dd>
+						<ul>
+							<li><a href="catalog_add.php?listtype=all">网站栏目管理</a></li>
+							<li><a href="content_list.php">所有档案列表</a></li>
+							<li><a href="content_list.php?arcrank=-1">等审核的档案</a></li>
+							<li><a href="content_list.php?mid=1">我发布的文档</a></li>
+							<li><a href="feedback_main.php">评论管理</a></li>
+						</ul>
+						</dd>
+					</dl>
+				</div>
+				<div>
+					<dl>
+						<dt><strong>非常用操作</strong></dt>
+						<dd>
+						<ul>
+							<li><a href="catalog_add.php?listtype=all">网站栏目管理</a></li>
+							<li><a href="content_list.php">所有档案列表</a></li>
+							<li><a href="content_list.php?arcrank=-1">等审核的档案</a></li>
+							<li><a href="content_list.php?mid=1">我发布的文档</a></li>
+							<li><a href="feedback_main.php">评论管理</a></li>
+						</ul>
+						</dd>
+					</dl>
+					<dl>
+						<dt><strong>非常用操作</strong></dt>
+						<dd>
+						<ul>
+							<li><a href="catalog_add.php?listtype=all">网站栏目管理</a></li>
+							<li><a href="content_list.php">所有档案列表</a></li>
+							<li><a href="content_list.php?arcrank=-1">等审核的档案</a></li>
+							<li><a href="content_list.php?mid=1">我发布的文档</a></li>
+							<li><a href="feedback_main.php">评论管理</a></li>
+						</ul>
+						</dd>
+					</dl>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td class="menu-footer">&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+<script>
+(function($) {
+	var CMODULE = $();
+	var CLIST = $();
+
+	$("#module li").bind({
+		mouseover: function(e) {$(this).addClass("s");},
+		mouseout: function(e) {$(this).removeClass("s");},
+		click: function(e) {
+			if (this == CMODULE.get(0)) {
+				return;
+			}
+
+			var $this = $(this), 
+				i = $("#module li").index(this),
+				$div = $("#list div").eq(i);
+			CMODULE.removeClass("c");
+			$this.addClass("c");
+			CMODULE = $this;
+			CLIST.hide();
+			$div.show();
+			CLIST = $div;
+			return false;
+		}
+	});
+
+	$("#list dt").click(function(e) {
+		var $this = $(this);
+		$this.parent().toggleClass("c");
+		$this.next().toggle();
+	});
+
+	// exe
+	$("#module li").eq(0).trigger('click');
+})(jQuery);
+</script>
+</body>
+</html>

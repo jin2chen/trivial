@@ -1,0 +1,73 @@
+" Custom settings
+set t_Co=256
+set nocompatible
+set history=50
+set backspace=indent,eol,start
+set ruler
+set noeb
+set vb t_vb=""
+set mouse=""
+set showcmd
+set tabstop=4
+set shiftwidth=4
+set noincsearch
+set number
+set encoding=utf-8
+set fileformat=unix
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set winaltkeys=no
+"set completeopt+=menuone
+set completeopt-=preview
+set virtualedit=block
+set ignorecase
+set smartcase
+set noincsearch
+set modeline
+set modelines=5
+"language messages en_US.utf-8
+colorscheme desert
+let g:mapleader=","
+"let g:php_sql_query=1
+noremap <Esc>1 1gt
+noremap <Esc>2 2gt
+noremap <Esc>3 3gt
+noremap <Esc>4 4gt
+noremap <Esc>5 5gt
+noremap <Esc>6 6gt
+noremap <Esc>7 7gt
+noremap <Esc>8 8gt
+noremap <Esc>9 9gt
+noremap gQ Q
+nnoremap <leader>ee :tabe $HOME/.vimrc<CR>
+nnoremap <leader>hh :tab help<CR>
+nnoremap <leader>hi :tab help intro.txt<CR>
+nnoremap <leader>hq :tab help quickref.txt<CR>
+nnoremap <leader>he :tab help eval.txt<CR>
+nnoremap <leader>hf :tab help function-list<CR>
+nnoremap <leader>bo :browse oldfiles<CR>
+autocmd! BufWritePost .vimrc source $HOME/.vimrc
+
+
+" pathogen plug manager
+call pathogen#infect()
+
+" NERD_tree settings
+noremap <F2> :NERDTreeToggle<CR>
+
+" DoxygenToolKit settings
+let g:DoxygenToolkit_briefTag_pre=""
+nnoremap <silent> <leader>cc :Dox<CR>
+
+" supertab settings
+let g:SuperTabDefaultCompletionType="context"
+let g:SuperTabContextDefaultCompletionType="<C-X><C-O>"
+
+" taglist settings
+let g:Tlist_Show_One_File=1
+let g:Tlist_Use_Right_Window=1
+let g:Tlist_GainFocus_On_ToggleOpen=1
+noremap <F12> :TlistToggle<CR>
+
+" load_template settings
+let g:template_path=$HOME . '/.vim/template'
+

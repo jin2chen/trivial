@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>wish dev</title>
+<script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.10.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery.wish.js"></script>
+<style type="text/css">
+	#drag-container {
+		border: 1px solid #f00;
+		width: 600px;
+		height: 480px;
+		position: relative;
+		padding: 0;
+		margin: 0;
+	}
+	#drag-container li {
+		list-style: none;
+		width: 100px;
+		height: 90px;
+		border: 1px solid #0f0;
+		position: absolute;
+		background-color: #ccc;
+	}
+</style>
+<script type="text/javascript">
+var data = [{"id":1, "username":"chenjin", "nickname": "mole", "style": "sss1"}, {"id":2, "username":"mole", "nickname": "yjpx", "style": "sss2"}];
+	jQuery(function($) {
+		$("#drag-container").wishList(data, {tpl: $("#wish-tpl").val()});
+		//.draggable({ containment: "#drag-container", scroll: false });
+		//console.log($("#wish-tpl").val());
+	});
+	
+</script>
+</head>
+
+<body>
+	<ul id="drag-container">
+
+	</ul>
+<textarea id="wish-tpl">
+<li>{nickname}</li>
+</textarea>
+</body>
+</html>
+

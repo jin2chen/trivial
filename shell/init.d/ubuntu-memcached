@@ -1,0 +1,98 @@
+#!/bin/bash
+#
+# memcached  Memecached start and stop
+# 
+# chkconfig: - 22 78
+# description: Start memcached daemon
+# processname: memcached
+# config:
+# pidfile: /var/run/memcached.pid
+# author: mole <mole1230@gmail.com>
+#
+### BEGIN INIT INFO
+# Provides:          memcached
+# Required-Start:    $network
+# Required-Stop:     $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start and stop memcached
+# Description: iMemcached is an in-memory key-value store for 
+#              small chunks of arbitrary data (strings, objects) 
+#              from results of database calls, API calls, or page rendering 
+### END INIT INFO
+
+DESC="memcached"
+NAME="memcached"
+SCRIPTNAME="/etc/init.d/memcached"
+
+# Read configuration variable file if it is present
+[ -r /etc/default/$NAME ] && . /etc/default/$NAME
+
+[ $(id -u) = 0 ] && USER=daemon || USER=${USER:-daemon}
+PIDFILE=/var/run/memcached.pid
+BASEDIR=${BASEDIR:-/usr/local/memcached}
+MEMCACHED=${MEMCACHED:-$BASEDIR/bin/memcached}
+MEMCACHED_ARGS=${MEMCACHED_ARGS:--d -u $USER}
+RETVAL=0
+
+# Source function library.
+. /lib/lsb/init-functions
+
+do_check() {
+	while true
+	do
+
+		if [ ! -x $MEMCACHED ]; then
+			RETVAL=1
+			echo -n "$MEMCACHED is not found"
+			break;
+		fi
+
+		break;
+	done
+
+	if [ $RETVAL != 0 ]; then 
+		log_end_msg 1
+		exit 1
+	fi 
+	
+	return 0
+}
+
+do_start() {
+	log_daemon_msg "Starting $NAME: "
+	do_check || exit 1
+
+	start-stop-daemon --start --oknodo --quiet --user $USER --exec $MEMCACHED -- $MEMCACHED_ARGS	
+	RETVAL=$?
+	[ $RETVAL = 0 ] && log_end_msg 0 || log_end_msg 1
+	return $RETVAL
+}
+
+do_stop() {
+	log_daemon_msg "Stopping $NAME: "
+	do_check || exit 1;
+	
+	start-stop-daemon --stop --oknodo --quiet --user $USER --exec $MEMCACHED -- $MEMCACHED_ARGS
+	RETVAL=$?
+	[ $RETVAL = 0 ] && log_end_msg 0 || log_end_msg 1
+	return $RETVAL
+}
+
+# See how we are called.
+case "$1" in
+	start)
+		do_start
+		;;
+	stop)
+		do_stop
+		;;
+	restart)
+		do_stop
+		do_start
+		;;
+	*)
+		echo "Usage: $SCRIPTNAME {start|stop|restart}"
+		exit 1;
+esac
+

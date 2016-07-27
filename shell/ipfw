@@ -1,0 +1,10 @@
+#!/bin/bash
+#================< Set Variable >=================
+IPT=/sbin/iptables
+IP_SELF=192.168.1.33
+
+#================< Clear Original Rule >=================
+$IPT -t filter -F
+
+#================< Set INPUT Rule >=================
+

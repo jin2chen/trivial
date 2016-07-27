@@ -1,0 +1,29 @@
+set completeopt-=preview
+set virtualedit=block
+set showcmd		" Show (partial) command in status line.
+set showmatch		" Show matching brackets.
+set noeb
+set vb t_vb=""
+set nu
+set ts=4
+set sw=4
+set ruler
+set noeb
+set vb t_vb=""
+set mouse=""
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+let g:mapleader=","
+inoremap <C-T> <Tab>
+
+"" NERD_tree settings
+noremap <F2> :NERDTreeToggle<CR>
+
+"" supertab settings
+let g:SuperTabDefaultCompletionType="context"
+let g:SuperTabContextDefaultCompletionType="<C-X><C-O>"
+
+"" taglist settings
+let g:Tlist_Show_One_File=1
+let g:Tlist_Use_Right_Window=1
+let g:Tlist_GainFocus_On_ToggleOpen=1
+noremap <F12> :TlistToggle<CR>

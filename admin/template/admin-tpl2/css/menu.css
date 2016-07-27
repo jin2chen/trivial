@@ -1,0 +1,82 @@
+body {
+	font-size: 12px;
+	margin:auto;
+	text-align:center;
+	background:url(../images/leftmenu_bg.gif) #eff5ed;
+	padding:0 0 0 3px;
+	overflow-y:scroll;
+	overflow-x:hidden;
+}
+ul,dl,dd {
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+a:link {
+    color: #000000;
+    font-size: 9pt;
+    text-decoration: none;
+}
+a:visited {
+    color: #000000;
+    font-size: 9pt;
+    text-decoration: none;
+}
+a:hover {
+    color: red;
+}
+.module {
+	padding-top: 10px;
+}
+.module li {
+	background:url(../images/button_bg.png) no-repeat 0 -180px;
+	height:37px!important;
+	height:47px;
+	padding:6px 4px 4px 10px;
+	word-wrap: break-word;
+	word-break : break-all;
+	font-weight:bold;
+	color:#475645;
+	cursor:pointer;
+	line-height: 1.5;
+}
+.module .c, .module .s {
+	background:url(../images/button_bg.png) no-repeat 0 -252px;
+}
+.list {
+	background:url(../images/idnbg1.gif) repeat-y;
+	padding-top: 8px;
+}
+.list div {
+	display: none;
+}
+.list dl {
+	clear:both;
+	width:140px;
+	margin:0px 0px 5px 12px;
+	background:url(../images/button_bg.png) no-repeat 0 -360px;
+}
+.list .c {
+	background:url(../images/button_bg.png) no-repeat 0 -396px;
+}
+.list dt {
+	height:25px;
+	line-height:25px;
+	padding-left:35px;
+	cursor:pointer;
+}
+.list strong {
+	color:#4D6C2F;
+}
+.list dd {
+	padding:3px 3px 3px 3px;
+	background-color:#fff;
+}
+.list li {
+	padding:0px 0px 0px 18px;
+	line-height:22px;
+	background:url(../images/icon-bg.png) no-repeat 0 -100px;
+}
+.menu-footer {
+	background:url(../images/button_bg.png) no-repeat 0 -324px;
+}

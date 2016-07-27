@@ -1,0 +1,117 @@
+#!/bin/bash
+#
+# lvsdrr  LVS-DR Real server start and stop
+# 
+# chkconfig: - 22 78
+# description: Add VIP for LVS-DR real server. \
+#              see ifconfig(8)
+# processname: lvsdrr
+# config:
+# pidfile: 
+# author: mole <mole1230@gmail.com>
+#
+### BEGIN INIT INFO
+# Provides:          lvsdrr 
+# Required-Start:    $network
+# Required-Stop:     $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Starts lvsdrr 
+# Description: Add ip and route 
+### END INIT INFO
+
+# Set ENV PATH
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+export PATH
+DESC="Add virture IP"
+NAME="lvsdrr"
+SCRIPTNAME="/etc/init.d/lvsdrr"
+
+# Read configuration variable file if it is present
+[ -r /etc/default/$NAME ] && . /etc/default/$NAME
+
+VIPS=${VIPS:-192.168.194.222 192.168.194.225}
+RETVAL=0
+
+# Source function library.
+. /lib/lsb/init-functions
+
+do_check() {
+	while true
+	do
+		if [ $(id -u) != 0 ]; then
+			RETVAL=1
+			echo -n "No permission, please use root"
+			break;
+		fi
+
+		break;
+	done
+
+	if [ $RETVAL != 0 ]; then 
+		log_end_msg 1
+		exit 1
+	fi 
+	
+	return 0
+}
+
+do_start() {
+	log_begin_msg "Starting $NAME: "
+	do_check || exit 1
+
+	echo "1" > /proc/sys/net/ipv4/conf/lo/arp_ignore	
+	echo "2" > /proc/sys/net/ipv4/conf/lo/arp_announce
+	echo "1" > /proc/sys/net/ipv4/conf/all/arp_ignore
+	echo "2" > /proc/sys/net/ipv4/conf/all/arp_announce
+	sysctl -p &> /dev/null	
+	
+	for vip in $VIPS
+	do
+		ip addr add $vip/32 dev lo &> /dev/null
+		route add -host $vip dev lo &> /dev/null
+	done
+
+	RETVAL=$?
+	[ $RETVAL = 0 ] && log_end_msg 0 || log_end_msg 1
+	return $RETVAL
+}
+
+do_stop() {
+	log_begin_msg "Stopping $NAME: "
+	do_check || exit 1;
+	
+	for vip in $VIPS
+	do
+		route del -host $vip dev lo &> /dev/null
+		ip addr del $vip/32 dev lo &> /dev/null
+	done
+
+	echo "0" > /proc/sys/net/ipv4/conf/lo/arp_ignore
+	echo "0" > /proc/sys/net/ipv4/conf/lo/arp_announce
+	echo "0" > /proc/sys/net/ipv4/conf/all/arp_ignore
+	echo "0" > /proc/sys/net/ipv4/conf/all/arp_announce
+	sysctl -p &> /dev/null
+
+	RETVAL=$?
+	[ $RETVAL = 0 ] && log_end_msg 0 || log_end_msg 1
+	return $RETVAL
+}
+
+# See how we are called.
+case "$1" in
+	start)
+		do_start
+		;;
+	stop)
+		do_stop
+		;;
+	restart)
+		do_stop
+		do_start
+		;;
+	*)
+		echo "Usage: $SCRIPTNAME {start|stop|restart}"
+		exit 1;
+esac
+
